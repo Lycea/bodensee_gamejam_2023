@@ -11,19 +11,31 @@ end
 function sample_state:startup()
    print("startup")
 
-   gvar.map = glib.map() 
+   gvar.map = glib.map()
+   for i=0, 10 do
+     
+     table.insert(gvar.people, glib.person({ x = 0, y = 0 }))
+
+   end
+   --table.insert(gvar.people, glib.person({ x = 0, y = 0 }))
 end
 
 
 function sample_state:draw()
 
   gvar.map:draw()
+
+  for k,person in pairs(gvar.people) do
+    person:draw()
+  end
 end
 
 
 
 function sample_state:update()
-    
+   for k,person in pairs(gvar.people) do
+    person:update()
+  end 
 end
 
 function sample_state:shutdown()

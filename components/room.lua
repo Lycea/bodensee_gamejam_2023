@@ -7,6 +7,7 @@ local room_size = 32
 local d = gvar.dir
 
 function room:new(idx_pos)
+  self.has_ladder = false
   if room_base_pos == 0 then
     room_base_pos = glib.types.pos(scr_w / 2, scr_h / 2)
   end
@@ -20,6 +21,12 @@ function room:new(idx_pos)
   end
 
   print("new room, neigh size", #self.empty_neighs)
+end
+
+function room:get_pos()
+  return glib.types.pos(
+              room_base_pos.x + self.pos.x*room_size,
+              room_base_pos.y + self.pos.y*room_size)
 end
 
 function room:draw()
@@ -55,7 +62,7 @@ function room:check_for_slot()
 end
 
 function room:add_neighbor(dir,neighbor)
-  self.neighbors[dir] = neighbor
+  self.neighbors[d.neighbor_enum[dir]] = neighbor
 
   for k, v in pairs(self.empty_neighs) do
     if v == dir then

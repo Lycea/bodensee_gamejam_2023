@@ -1,6 +1,4 @@
 local map = class_base:extend()
-
-
 local d = gvar.dir
 
 
@@ -10,6 +8,30 @@ function map:new()
   local room = glib.room(glib.types.pos(0,0))
   table.insert(self.rooms, room)
   self.rooms_map["0;0"] = room
+
+end
+
+function map:get_directions(room_idx)
+
+  local tmp_room = self.rooms_map[room_idx.y .. ";" .. room_idx.x]
+  local dirs = {}
+
+  for k,v in pairs(tmp_room.neighbors) do
+    print("  ",k,v)
+  end
+
+  for direction, idx in pairs( d.neighbor_enum )  do
+    print(direction,idx, tmp_room.neighbors[idx])
+    if tmp_room.neighbors[idx] then
+      --if direction == "top" then
+       
+      --end
+
+      table.insert(dirs, direction)
+    end
+  end
+  
+  return dirs
 end
 
 function map:new_room()
@@ -50,13 +72,13 @@ end
 
 
 function map:draw()
-  print("drawing")
+  --print("drawing")
   for _,room in pairs(self.rooms) do
     room:draw()
   end
 
   --self:new_room()
-  print("new room done ?")
+  --print("new room done ?")
 end
 
 

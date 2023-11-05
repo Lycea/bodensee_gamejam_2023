@@ -26,6 +26,8 @@ gvar.dir = {}
 -- libs
 lib("helper.base_types","types")
 
+lib("helper.helpers","helper")
+
 lib("components.room","room")
 lib("components.map","map")
 lib("components.person","person")

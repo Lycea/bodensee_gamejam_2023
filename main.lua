@@ -51,16 +51,16 @@ end
 
 
 function love.update(dt)
-  print("update start")
+  --print("update start")
   game.update(dt)
-  print("Update stop")
+  --print("Update stop")
   
 end
 
 function love.draw()
-  print("draw start")
+  --print("draw start")
   game.draw()
-  print("draw stop")
+  --print("draw stop")
 end
 
 
