@@ -10,24 +10,28 @@ end
 
 function sample_state:startup()
    print("startup")
-
+  love.graphics.setDefaultFilter("nearest", "nearest")
    gvar.map = glib.map()
-   for i=0, 10 do
-     
-     table.insert(gvar.people, glib.person({ x = 0, y = 0 }))
-
-   end
-   --table.insert(gvar.people, glib.person({ x = 0, y = 0 }))
+   table.insert(gvar.people, glib.person({ x = 0, y = 0 }))
 end
 
 
 function sample_state:draw()
+  love.graphics.setColor(36,159,222)
+  love.graphics.rectangle("fill",0,0,scr_w,scr_h)
+  love.graphics.setColor(0,255,0)
+  love.graphics.rectangle("fill",0,scr_h-32, scr_w, scr_h)
+  love.graphics.setColor(255,255,255)
 
+  love.graphics.push()
+  love.graphics.scale(2,2)
+  love.graphics.translate(-scr_w/4 -32,-scr_h/4 + 32*3.5)
   gvar.map:draw()
 
   for k,person in pairs(gvar.people) do
     person:draw()
   end
+  love.graphics.pop()
 end
 
 

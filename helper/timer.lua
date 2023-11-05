@@ -2,13 +2,21 @@ local timer =class_base:extend()
 
 
 
-function timer:new(check_offset)
+function timer:new(check_offset,time)
+   self.get_time = time == nil and true or false
    self.offset = check_offset
-   self.__start = love.timer.getTime()
+
+   if self.get_time == true then
+     self.__start = love.timer.getTime()
+   else
+     self.__start = time
+   end
 end
 
-function timer:check()
-    local time_now = love.timer.getTime()
+function timer:check(time)
+   
+    local time_now = time or love.timer.getTime()
+
     if time_now > self.__start + self.offset then
        self.__start =time_now
        return true
@@ -16,6 +24,10 @@ function timer:check()
     
     return nil
 end
+
+
+
+
 
 
 

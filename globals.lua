@@ -31,7 +31,7 @@ lib("helper.helpers","helper")
 lib("components.room","room")
 lib("components.map","map")
 lib("components.person","person")
-
+lib("helper.loader", "loader")
 -- helper vars
 
 gvar.dir.neighbor_enum = {
@@ -40,7 +40,7 @@ gvar.dir.neighbor_enum = {
   bot = 3,
   left = 4
 }
-
+ 
 gvar.dir.direction_map = {
 
   top   = { 0, -1 },
@@ -55,12 +55,20 @@ gvar.dir.inv_directions = {
   left = "right",
   right = "left"
 }
+gvar.gr = {}
 
+--graphics
+gvar.gr.animations = glib.loader.loadTiles("assets/animations.png", 16, 16)
+gvar.gr.animations.image:setFilter("nearest", "nearest")
+gvar.gr.buildings = glib.loader.loadTiles("assets/buildings.png", 32, 32)
+gvar.gr.buildings.image:setFilter("nearest", "nearest")
 -- main parts
 
 
 gvar.people = {}
 gvar.map = {} 
+
+gvar.time = 0 --current frame time
 
 
 

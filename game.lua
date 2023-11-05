@@ -103,6 +103,7 @@ end
 --loading a game
 function game.load() 
   game.new()
+  g.vars.time = love.timer.getTime()
 
 end 
  
@@ -153,7 +154,8 @@ end
 
 
 --main loop
-function game.update(dt) 
+function game.update(dt)
+  g.vars.time = love.timer.getTime()
   --handle game stuff
   if show_main_menue == false then
     game.play(dt)

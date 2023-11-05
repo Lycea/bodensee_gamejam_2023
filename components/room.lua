@@ -5,9 +5,31 @@ local room_size = 32
 
 
 local d = gvar.dir
+local room_types = {"house","fence","ladder"}
+local room_idx ={
+  house = {1,1},
+  fence = {2,1},
+  ladder = {3,1}
+}
+
 
 function room:new(idx_pos)
-  self.has_ladder = false
+
+  if idx_pos.x == idx_pos.y and idx_pos.x == 0 then
+    self.room_type = "house"
+  else
+    --type selection
+    local rnd_num = love.math.random(1, 100)
+    if rnd_num > 70 then
+      self.room_type = "house"
+    else
+      self.room_type = "fence"
+      if rnd_num > 50 then
+        self.room_type = "ladder"
+      end
+    end
+  end
+
   if room_base_pos == 0 then
     room_base_pos = glib.types.pos(scr_w / 2, scr_h / 2)
   end
@@ -30,11 +52,19 @@ function room:get_pos()
 end
 
 function room:draw()
-    love.graphics.rectangle("line",
-        room_base_pos.x + self.pos.x * room_size,
-        room_base_pos.y + self.pos.y * room_size,
-        room_size, room_size)
 
+    -- love.graphics.rectangle("line",
+    --     room_base_pos.x + self.pos.x * room_size,
+    --     room_base_pos.y + self.pos.y * room_size,
+    --     room_size, room_size)
+
+
+    love.graphics.draw(gvar.gr.buildings.image,
+    gvar.gr.buildings[room_idx[self.room_type][1]]
+                     [room_idx[self.room_type][2]],
+           room_base_pos.x + self.pos.x * room_size,
+           room_base_pos.y + self.pos.y * room_size
+    )
     -- connection debug
     -- for k , v in pairs(d.neighbor_enum) do
     --   if self.neighbors[k] == nil then

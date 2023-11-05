@@ -23,11 +23,16 @@ function map:get_directions(room_idx)
   for direction, idx in pairs( d.neighbor_enum )  do
     print(direction,idx, tmp_room.neighbors[idx])
     if tmp_room.neighbors[idx] then
-      --if direction == "top" then
-       
-      --end
+      if direction == "top" and tmp_room.room_type == "ladder"  then
+        table.insert(dirs,direction)
 
-      table.insert(dirs, direction)
+      elseif direction == "bot" and
+          tmp_room.neighbors[d.neighbor_enum["bot"]].room_type == "ladder"   then
+        table.insert(dirs,direction)
+
+      elseif direction == "left" or direction == "right" then
+        table.insert(dirs, direction)
+      end
     end
   end
   
@@ -49,6 +54,11 @@ function map:new_room()
      print("new idx: ", room.pos.y,room.pos.x)
      self.rooms_map[room.pos.y..";"..room.pos.x]=room
      table.insert(self.rooms, room)
+
+     --insert person
+     if room.room_type == "house" then
+       table.insert(gvar.people, glib.person({ x = room.pos.x, y = room.pos.y }))
+     end
 
      print("start fixing other connections")
      --now fix the other directions
